@@ -1,0 +1,89 @@
+CREATE SCHEMA IF NOT EXISTS `acme` DEFAULT CHARACTER SET utf8 ;
+USE `acme` ;
+
+-- -----------------------------------------------------
+-- Table `acme`.`Vehiculo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acme`.`Vehiculo` (
+  `placa` INT NOT NULL AUTO_INCREMENT,  
+  `idcedu_cond` INT NOT NULL,
+  `pri_nombre_pro` VARCHAR(45) NOT NULL,
+  `seg_nombre` VARCHAR(45) NOT NULL,
+  `apellido_pro` VARCHAR(45) NOT NULL,
+  `direccion_pro` VARCHAR(250) NULL,
+  `ciudad_pro` VARCHAR(45) NULL,
+  `telefono_pro` VARCHAR(45) NULL UNIQUE,
+  `color` VARCHAR(45) NULL UNIQUE,
+  `maraca` VARCHAR(45) NULL UNIQUE,
+  `tipo` VARCHAR(45) NULL UNIQUE,
+  PRIMARY KEY (`placa`))
+ENGINE = InnoDB;	
+ALTER TABLE `horarios` ADD INDEX(`placa`);
+-- -----------------------------------------------------
+-- Table `acme`.`conductor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acme`.`conductor` (
+  `idcedu_cond` INT NOT NULL AUTO_INCREMENT,
+  `pri_nombre_cond` VARCHAR(45) NOT NULL,
+  `seg_nombre_cond` VARCHAR(45) NOT NULL,
+  `apellido_cond` VARCHAR(45) NOT NULL,
+  `direccion_cond` VARCHAR(250) NULL,
+  `ciudad_cond` VARCHAR(45) NULL,
+  `telefono_cond` VARCHAR(45) NULL UNIQUE,
+  PRIMARY KEY (`idcedu_cond`))
+ENGINE = InnoDB;
+ALTER TABLE `horarios` ADD INDEX(`idcedu_cond`);
+
+
+-- -----------------------------------------------------
+-- Table `acme`.`horarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `acme`.`horarios` (
+  `idhora` INT NOT NULL AUTO_INCREMENT,  
+  `hora salida` time NOT NULL,
+  `hora entrada` time NOT NULL,
+  `placa` INT NOT NULL, 
+  `idcedu_cond` INT NOT NULL,
+  
+  PRIMARY KEY (`idhora`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- alias
+-- -----------------------------------------------------
+ALTER TABLE `horarios` ADD INDEX(`placa`);
+ALTER TABLE `horarios` ADD INDEX(`idcedu_cond`);
+ALTER TABLE `vehiculo` ADD INDEX(`idcedu_cond`);
+
+SELECT pri_nombre_pro AS pnp FROM Vehiculo;
+SELECT seg_nombre AS snp FROM Vehiculo;
+SELECT apellido_pro AS ap FROM Vehiculo;
+SELECT direccion_pro AS dp FROM Vehiculo;
+SELECT ciudad_pro AS cp FROM Vehiculo;
+SELECT telefono_pro AS tp FROM Vehiculo;
+
+SELECT idcedu_cond AS ic FROM conductor;
+SELECT pri_nombre_cond AS pnc FROM conductor;
+SELECT seg_nombre_cond AS snc FROM conductor;
+SELECT apellido_cond AS ac FROM conductor;
+SELECT direccion_cond AS dc FROM conductor;
+SELECT ciudad_cond AS cc FROM conductor;
+SELECT telefono_cond AS tc FROM conductor;
+
+-- -----------------------------------------------------
+-- Datos conductor
+-- -----------------------------------------------------
+
+INSERT INTO `conductor` (`idcedu_cond`, `pri_nombre_cond`, `seg_nombre_cond`, `apellido_cond`, `direccion_cond`, `ciudad_cond`, `telefono_cond`) VALUES ('1030658823', 'Andres', 'Felipe', 'Camayo Cometa', 'Calle 78 bis sur # 94 - 27 Torre 12, apartamento 4046, Bogotá, Cundinamarca', 'Bogota', '+57 3203117056'), ('25544351', 'Cinia ', 'Omaira ', 'Camayo Cometa', 'Cra. 89A #70a Sur-1 a 70a Sur-33, Bogotá', 'Bogota ', '3138456024');
+
+-- -----------------------------------------------------
+-- Datos vehiculo 
+-- -----------------------------------------------------
+
+INSERT INTO `vehiculo` (`placa`, `idcedu_cond`, `pri_nombre_pro`, `seg_nombre`, `apellido_pro`, `direccion_pro`, `ciudad_pro`, `telefono_pro`, `color`, `maraca`, `tipo`) VALUES ('73111', '1030658823', 'Jeison ', 'alejandro', 'Guzman', 'Cra. 89A #65-18, Bogotá', 'Bogota', '3125140198', 'blanco', 'chevrolet', 'particular'), ('88444', '25544351', 'James', 'Randly', 'Guazman', 'Cl. 70a Sur #89 14, Bosa, Bogotá, Cundinamarca', 'Bogota', '3153819051', 'gris', 'Nokia', 'publico');
+
+-- -----------------------------------------------------
+-- Datos vehiculo 
+-- -----------------------------------------------------
+
+INSERT INTO `horarios` (`idhora`, `hora salida`, `hora entrada`, `placa`, `idcedu_cond`) VALUES ('1', '13:23:13', '22:23:13', '73111', '1030658823'), ('2', '12:09:25', '17:09:25', '88444', '25544351');
