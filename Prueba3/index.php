@@ -34,20 +34,17 @@ try {
 			<table class="col-md-12">
 				<tr class="bg-primary">
 					<th class="pad-basic">placa </th>
-					<th class="pad-basic">pri_nombre_pro </th>
-					<th class="pad-basic">seg_nombre_pro </th>
-					<th class="pad-basic">apellido_pro </th>
+					<th class="pad-basic">nombre_completo_propietario </th>
+					<th class="pad-basic">nombre_completo_conductor </th>
 					<th class="pad-basic">marca</th>
-                    <th class="pad-basic">pri_nombre_cond</th>
-					<th class="pad-basic">seg_nombre_cond</th>
-                    <th class="pad-basic">apellido_cond</th>
 				<tr>
 
 				<?php
 
-				$query="SELECT `vehiculo`.`placa`,`vehiculo`.`marca`, 
-				`propietario`.`pri_nombre_pro`, `propietario`.`seg_nombre_pro`, `propietario`.`apellido_pro`,
-				`conductor`.`pri_nombre_cond`, `conductor`.`seg_nombre_cond`, `conductor`.`apellido_cond` 
+				$query="SELECT  
+				concat_ws(' ', `propietario`.`pri_nombre_pro`, `propietario`.`seg_nombre_pro`,`propietario`.`apellido_pro`)  as nombre_completo_propietario ,
+				concat_ws(' ', `conductor`.`pri_nombre_cond`, `conductor`.`seg_nombre_cond`, `conductor`.`apellido_cond`)  as nombre_completo_conductor ,
+				`vehiculo`.`placa`,`vehiculo`.`marca`
                 FROM `vehiculo` 
                 INNER JOIN `propietario` ON `vehiculo`.`cedula_pro` = `propietario`.`cedula_pro` 
                 INNER JOIN `conductor` ON `vehiculo`.`idcedu_cond` = `conductor`.`idcedu_cond`;";
@@ -57,13 +54,11 @@ try {
 						echo'
 						<tr>
 						<td>'.$fila['placa'].'</td>
-						<td>'.$fila['pri_nombre_pro'].'</td>
-						<td>'.$fila['seg_nombre_pro'].'</td>
-						<td>'.$fila['apellido_pro'].'</td>
+						<td>'.$fila['pri_nombre_pro'].'  ." ".  '.$fila['seg_nombre_pro'].'  ." ".  '.$fila['seg_nombre_pro'].'<td>
+						<td>'.$fila['pri_nombre_pro'].'  ." ".  '.$fila['seg_nombre_cond'].'  ." ".  '.$fila['apellido_cond'].'<td>
 						<td>'.$fila['marca'].'</td>
-						<td>'.$fila['pri_nombre_cond'].'</td>
-						<td>'.$fila['seg_nombre_cond'].'</td>
-						<td>'.$fila['apellido_cond'].'</td>
+						
+						
 						</tr>
 						';
 					}
